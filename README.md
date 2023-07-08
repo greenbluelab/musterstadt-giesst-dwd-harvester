@@ -73,6 +73,23 @@ To run the harvester and the postgres db run
 docker-compose up
 ```
 
+## Inspect Data with Overpass
+In order to see if there is some crowd-sourced data in OSM, you can checkout the Overpass API: https://overpass-turbo.eu/#
+
+The following command shoudl return round about 2.000 pumps for Berlin
+
+```
+area
+  [boundary=administrative]
+  [admin_level=4]
+  ["name"="Berlin"]->.searchArea;
+node
+  [man_made=water_well](area.searchArea);
+out;
+```
+
+Read more about the Overpass data mining tool here: https://wiki.openstreetmap.org/wiki/Overpass_turbo
+
 ### Known Problems
 
 #### harvester.py throws Error on first run
@@ -89,7 +106,8 @@ docker-compose up --build
 
 ```
 
-## Terraform
+## ⚠️ Terraform ⚠️ DEPRECATED ⚠️
+**We use Supabase Public Storage Bucket. Go to you Supabase Backend and create a new public storage bucket named `data_assests`**
 
 Terrafrom is used to create the needed S3 Bucket, the Postres RDS and the Fargate container service. [Install and configure Terraform](https://learn.hashicorp.com/terraform?track=getting-started#getting-started). Update `terraform.tfvars` with your profile and region.
 
